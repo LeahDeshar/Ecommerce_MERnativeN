@@ -10,6 +10,8 @@ import Checkout from './screens/Checkout';
 import Payment from './screens/Payment';
 import Login from './screens/auth/Login';
 import Register from './screens/auth/Register';
+import Account from './screens/Account';
+import AccountUser from './screens/Account/AccountUser';
 
 const Stack =createNativeStackNavigator();
 export default function App() {
@@ -29,11 +31,8 @@ export default function App() {
           headerShown: false
         }}/>
 
-
+        <Stack.Screen name='account' component={AccountUser}/>
         <Stack.Screen name='payment' component={Payment}/>
-
-
-
         <Stack.Screen name='mobile' component={About}/>
 
     </Stack.Navigator>

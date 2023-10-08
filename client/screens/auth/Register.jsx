@@ -6,10 +6,14 @@ const Register = ({navigation}) => {
     const [email,setEmail] =useState('')
     const [password,setPassword] =useState('')
     const [name,setName] =useState('')
+    const [address,setAddress] =useState('')
+    const [city,setCity] =useState('')
+    const [contact,setContact] =useState('')
+
 
 
     const handleRegister = () =>{
-        if(!email || !password || !name)
+        if(!email || !password || !name || !address || !city || !contact)
         {
             return alert("Please enter your information")
         }
@@ -35,6 +39,21 @@ const Register = ({navigation}) => {
         secureTextEntry={true}
         value={password}    
         setValue={setPassword}/>
+     
+     <InputBox placeholder={"Enter Your Address"} 
+        value={address}    
+        setValue={setAddress}
+        autoComplete={"address-line1"}/>
+
+     <InputBox placeholder={"Enter Your City"} 
+        value={city}    
+        setValue={setCity}
+        autoComplete={"country"}/>
+    
+    <InputBox placeholder={"Enter Your Contact"} 
+        value={contact}    
+        setValue={setContact}
+        autoComplete={"tel"}/>
 
         <View style={styles.btnContainer}>
         <TouchableOpacity style={styles.loginBtn} onPress={handleRegister}>
@@ -67,7 +86,6 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         marginHorizontal: 20,
         marginVertical: 20
-
     },
     btnContainer: {
         justifyContent: 'center',
