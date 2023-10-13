@@ -5,7 +5,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 
 import { UserData } from '../../data/UserData'
 
-const AccountUser = () => {
+const AccountUser = ({navigation}) => {
   return (
     <Layout>
         <View style={styles.container}> 
@@ -17,19 +17,20 @@ const AccountUser = () => {
             </View>
             <View style={styles.btnContainer}>
                 <Text style={styles.heading}>Account Setting</Text>
-                <TouchableOpacity>
-                    <AntDesign name='edit' style={styles.btnText}/>
+                <TouchableOpacity style={styles.btn} onPress={()=> navigation.navigate("profile",{id: UserData._id})}>
+                    <AntDesign name='edit' style={styles.btnText} />
                     <Text style={styles.btnText}>Edit Profile</Text>
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity style={styles.btn} onPress={()=> navigation.navigate("myorders",{id: UserData._id})}>
                     <AntDesign name='bars' style={styles.btnText}/>
                     <Text style={styles.btnText}>My Orders</Text>
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity style={styles.btn} onPress={()=> navigation.navigate("notification")}>
                     <AntDesign name='bells' style={styles.btnText}/>
                     <Text style={styles.btnText}>Notification</Text>
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity style={styles.btn} 
+                    onPress={()=> navigation.navigate("adminPanel",{id: UserData._id})}>
                     <AntDesign name='windows' style={styles.btnText}/>
                     <Text style={styles.btnText}>Admin Panel</Text>
                 </TouchableOpacity>
@@ -78,6 +79,7 @@ const styles = StyleSheet.create({
     btnText: 
     {
         fontSize: 15,
-        marginTop: 10
+        marginTop: 10,
+        marginLeft: 10
     }
 })
