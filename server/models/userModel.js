@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import bcrypt from 'bcryptjs'
-
+import JWT from "jsonwebtoken";
 const userSchema = new mongoose.Schema(
     {
       name: {
@@ -34,7 +34,12 @@ const userSchema = new mongoose.Schema(
         required: [true, "phone no is required"],
       },
       profilePic: {
-        type: String,
+        public_id:{
+          type: String,
+        },
+        url:{
+          type: String,
+        }
       },
     },
     { timestamps: true }
@@ -42,6 +47,9 @@ const userSchema = new mongoose.Schema(
 
 userSchema.pre("save", async function (next) {
     try {
+      if (!this.isModified("password")) {
+        next();
+      }
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(this.password, salt);
       this.password = hashedPassword;
@@ -59,6 +67,14 @@ userSchema.methods.isValidPassword = async function (password) {
       throw error;
     }
   }
-  
+  // token generate
+userSchema.methods.generateJWT = function () {
+    return JWT.sign(
+      {
+          _id: this._id,
+      },
+      process.env.JWT_SECRET
+    );
+  }
 export const userModel = mongoose.model("Users", userSchema);
 export default userModel;
