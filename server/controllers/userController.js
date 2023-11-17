@@ -4,9 +4,9 @@ import cloudinary from "cloudinary"
 
 export const registerController = async (req,res)=>{
   try {
-    const {name,email,password,address,city,country,phone} = req.body;
+    const {name,email,password,address,city,country,phone,answer} = req.body;
 
-    if(!name || !email || !password || !address || !city || !country || !phone){
+    if(!name || !email || !password || !address || !city || !country || !phone || !answer){
         return res
            .status(400)
            .json({
@@ -294,4 +294,47 @@ export const profilePicUpdateController = async (req,res)=>{
                error
        })
     }
+}
+
+export const resetPasswordController = async (req,res) =>{
+    try {
+        const {email,answer,newPassword} = req.body
+        if(!email || !answer || !newPassword){
+            return res
+               .status(400)
+               .json({
+                   msg: "Fill all the fields",
+                   success: false,
+               })
+        }
+        const user = await Users.findOne({email,answer})
+        if(!user){
+            return res
+               .status(400)
+               .json({
+                   msg: "Email does not exist",
+                   success: false,
+               })
+        }
+        user.password = newPassword
+        await user.save()
+        
+        return res
+           .status(200)
+           .json({
+               msg: "Password Reset",
+               success: true,
+               user
+              })
+    } catch (error) {
+        console.log(error);
+        return res
+           .status(500)
+           .json({
+               msg: "Internal Error (reset password)",
+               success: false,
+               error
+       })
+    }
+
 }

@@ -7,7 +7,7 @@ const ProductsCard = ({p}) => {
     // more detail button
     const handleMoreBtn = (id) =>
     {
-        navigation.navigate('productDetails',{_id: id})
+        navigation.navigate('Product Details',{_id: id})
     }
     const handleAddToCart = ()=>
     {

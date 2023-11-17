@@ -5,8 +5,14 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import connectDB from './db/config.js'
 import router from './routes/userRoutes.js'
+import productRouter from './routes/productRoutes.js'
+import categoryRouter from './routes/categoryRoute.js'
+import orderRouter from './routes/orderRoutes.js'
+
+
 import cookieParser from 'cookie-parser'
 import cloudinary from "cloudinary"
+import Stripe from 'stripe'
 
 const app = express()
 app.use(cors())
@@ -23,12 +29,26 @@ cloudinary.v2.config({
 })
 connectDB()
 
+
+// stripe configuration
+export const stripe = new Stripe(process.env.STRIPE_API_SCERET)
+
+
+
+
+
+
 app.get('/',(req,res)=>
 {
     res.send("Hello")
 })
 
 app.use('/api/v1/user',router)
+app.use('/api/v1/products',productRouter)
+app.use('/api/v1/category',categoryRouter)
+app.use('/api/v1/order',orderRouter)
+
+
 const PORT = process.env.PORT || 8000
 app.listen(PORT,()=>{
     console.log(`Server is running on port ${PORT} on ${process.env.NODE_ENV} mode`.bgCyan.white);
