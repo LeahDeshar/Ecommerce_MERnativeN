@@ -1,5 +1,7 @@
 import express from 'express'
 import colors from 'colors'
+import { rateLimit } from 'express-rate-limit'
+
 import morgan from 'morgan'
 import cors from 'cors'
 import dotenv from 'dotenv'
@@ -8,14 +10,15 @@ import router from './routes/userRoutes.js'
 import productRouter from './routes/productRoutes.js'
 import categoryRouter from './routes/categoryRoute.js'
 import orderRouter from './routes/orderRoutes.js'
-
-
+import helmet from 'helmet'
+import ExpressMongoSanitize from 'express-mongo-sanitize'
 import cookieParser from 'cookie-parser'
 import cloudinary from "cloudinary"
 import Stripe from 'stripe'
-
 const app = express()
 app.use(cors())
+app.use(helmet())
+app.use(ExpressMongoSanitize())
 dotenv.config()
 app.use(morgan('dev'))
 app.use(express.json())

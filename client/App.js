@@ -16,38 +16,43 @@ import Notifications from './screens/Account/Notifications';
 import Profile from './screens/Account/Profile';
 import MyOrders from './screens/Account/MyOrders';
 import Dashboard from './screens/Admin/Dashboard';
+import {Provider} from 'react-redux'
+import store from './redux/store';
+
 
 const Stack =createNativeStackNavigator();
 export default function App() {
   return (
-    <NavigationContainer>
-    <Stack.Navigator initialRouteName='login'>
-        <Stack.Screen name='home' component={Home} options={{
-            headerShown: false,
-        }}/>
-        <Stack.Screen name='productDetails' component={ProductDetails}/>
-        <Stack.Screen name='CART' component={Cart}/>
-        <Stack.Screen name='checkout' component={Checkout}/>
-        <Stack.Screen name='login' component={Login} options={{
-          headerShown: false
-        }}/>
-        <Stack.Screen name='register' component={Register} options={{
-          headerShown: false
-        }}/>
+    <Provider store={store}>
+      <NavigationContainer>
+      <Stack.Navigator initialRouteName='login'>
+          <Stack.Screen name='home' component={Home} options={{
+              headerShown: false,
+          }}/>
+          <Stack.Screen name='productDetails' component={ProductDetails}/>
+          <Stack.Screen name='CART' component={Cart}/>
+          <Stack.Screen name='checkout' component={Checkout}/>
+          <Stack.Screen name='login' component={Login} options={{
+            headerShown: false
+          }}/>
+          <Stack.Screen name='register' component={Register} options={{
+            headerShown: false
+          }}/>
 
-        <Stack.Screen name='account' component={AccountUser}/>
-        <Stack.Screen name='payment' component={Payment}/>
-        <Stack.Screen name='mobile' component={About}/>
-        <Stack.Screen name='myorders' component={MyOrders}/>
+          <Stack.Screen name='account' component={AccountUser}/>
+          <Stack.Screen name='payment' component={Payment}/>
+          <Stack.Screen name='mobile' component={About}/>
+          <Stack.Screen name='myorders' component={MyOrders}/>
 
-        <Stack.Screen name='notification' component={Notifications}/>
-        <Stack.Screen name='profile' component={Profile}/>
-        <Stack.Screen name='adminPanel' component={Dashboard}/>
-
-
+          <Stack.Screen name='notification' component={Notifications}/>
+          <Stack.Screen name='profile' component={Profile}/>
+          <Stack.Screen name='adminPanel' component={Dashboard}/>
 
 
-    </Stack.Navigator>
-</NavigationContainer>
+
+
+      </Stack.Navigator>
+     </NavigationContainer>
+    </Provider>
   );
 }

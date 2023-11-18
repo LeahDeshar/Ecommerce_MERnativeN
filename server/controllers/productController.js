@@ -4,12 +4,21 @@ import { getDataUri } from "../utils/features.js";
 import cloudinary from "cloudinary"
 
 export async function getAllProductController(req,res){
-
+    const {keyword,category} = req.query
     try{
-        const products = await Products.find({});
+        const products = await Products.find({
+            name: {
+                $regex: keyword ? keyword : "",
+                $options: "i"
+            },
+            // category: category? category
+        }).populate('category')
+
+
         return res.status(200).json({
             success: true,
             message:"All Product fetched",
+            totalProduct: products.length,
             products
         })
         }catch (error) {
@@ -27,7 +36,25 @@ export async function getAllProductController(req,res){
         }
 
 }
-
+// controller to get all top products
+export async function getTopProductController(req,res){
+    try {
+        const products = await Products.find({}).sort({rating: -1}).limit(3)
+        return res.status(200).json({
+            success: true,
+            message:"All Top 3 Product fetched",
+            totalProduct: products.length,
+            products
+        })
+        
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: "Error in product api " + error.message,
+        });
+        
+    }   
+}
 export async function getOneProductController(req,res){
     try {
         const product = await Products.findById(req.params.id);
